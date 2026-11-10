@@ -16,6 +16,14 @@
     },
     "md046": {
       "style": "fenced"
+    },
+    "md033": {
+      "allowed_elements": "!--,![CDATA[,!DOCTYPE,div,br"
     }
-  }
+  },
+  "_why_md033_allows_div_br": [
+    "The shield block at the top of README.md is wrapped in a <div> with a <br /> line break,",
+    "as in the other Qiskit ecosystem repositories. The default allow-list is kept so HTML",
+    "comments still pass."
+  ]
 }
