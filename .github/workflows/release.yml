@@ -41,7 +41,7 @@ jobs:
       # The C++ extension is built with pybind11, which does not target the stable ABI, so
       # one wheel is built per CPython version; see [tool.cibuildwheel] in pyproject.toml.
       - name: Build wheels
-        uses: pypa/cibuildwheel@v4.3.1
+        uses: pypa/cibuildwheel@v4.3.5
       - name: Store the wheels
         uses: actions/upload-artifact@v7
         with:
