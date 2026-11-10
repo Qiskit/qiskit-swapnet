@@ -445,6 +445,7 @@ def build(
         coeffs_list.append(two[(a, b)])
 
     import numpy as _np
+
     coeffs_arr = _np.empty(len(coeffs_list), dtype=object)
     for _i, _c in enumerate(coeffs_list):
         coeffs_arr[_i] = _c
