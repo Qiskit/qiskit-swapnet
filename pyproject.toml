@@ -10,12 +10,14 @@ readme = "README.md"
 requires-python = ">=3.10"
 authors = [{ name = "Francisco Barahona" }]
 dependencies = [
-    "numpy>=1.24",
+    # 1.26.2 is what qiskit-ibm-runtime (dev/devices extras) requires; the minimum-version
+    # CI job pins every floor exactly, so the core floor has to match it.
+    "numpy>=1.26.2",
 ]
 
 [project.optional-dependencies]
 # Default MILP backend. HiGHS is also reachable through scipy.optimize.milp.
-highs = ["highspy>=1.7"]
+highs = ["highspy>=1.7.1"]
 scipy = ["scipy>=1.11"]
 graphs = ["networkx>=3.0", "rustworkx>=0.14"]
 # Stage 2 reads a backend Target and stage 5 builds the circuit. The core stays
@@ -24,17 +26,20 @@ graphs = ["networkx>=3.0", "rustworkx>=0.14"]
 # routines directly; named here so that is a stated requirement, not a happy accident.
 qiskit = ["qiskit>=2,<3", "networkx>=3.0", "rustworkx>=0.15"]
 # FakeBoston and friends, for the README's self-contained examples and the slow tests.
-devices = ["qiskit-ibm-runtime>=0.30"]
+devices = ["qiskit-ibm-runtime>=0.47"]
+# The floors here are set by qiskit-ibm-runtime: 0.47 is the first release with FakeBoston,
+# which the slow tests use, and it (via samplomatic) needs qiskit>=2.3 and rustworkx>=0.16.
+# The minimum-version CI job pins every ">=" to "==", so these must resolve together.
 dev = [
     "pytest>=8.0",
     "networkx>=3.0",
-    "rustworkx>=0.14",
+    "rustworkx>=0.16",
     "scipy>=1.11",
-    "highspy>=1.7",
-    "qiskit>=2,<3",
-    "qiskit-ibm-runtime>=0.30",
+    "highspy>=1.7.1",
+    "qiskit>=2.3,<3",
+    "qiskit-ibm-runtime>=0.47",
     "ruff>=0.16",
-    "black>=25.0",
+    "black>=25.1",
     "pylint>=3.3",
     "pymarkdownlnt>=0.9",
 ]
@@ -109,3 +114,25 @@ filterwarnings = ["error::DeprecationWarning"]
 # conftest.py exposes helpers the test modules import by name.
 pythonpath = ["tests"]
 markers = ["slow: needs a full-size device target; deselect with -m 'not slow'"]
+
+[tool.cibuildwheel]
+# qiskit and rustworkx publish only manylinux_2_28 wheels (not manylinux2014), so
+# build/test in that image to pull binary deps instead of compiling sdists.
+manylinux-x86_64-image = "manylinux_2_28"
+manylinux-aarch64-image = "manylinux_2_28"
+# pybind11 does not target the stable ABI, so there is one wheel per CPython version.
+build = ["cp310-*", "cp311-*", "cp312-*", "cp313-*"]
+skip = ["*-win32", "*_i686", "*_universal2", "*-musllinux_*"]
+test-extras = ["dev"]
+# The slow tests build a full-size device target; the quick ones are enough to prove the
+# wheel imports and the extension works. `{project}` qualifies the path because cibuildwheel
+# runs the test command from its own scratch directory.
+test-command = "pytest -m \"not slow\" {project}/tests"
+
+[tool.coverage.run]
+branch = true
+parallel = true
+
+[tool.coverage.report]
+fail_under = 70
+show_missing = true
