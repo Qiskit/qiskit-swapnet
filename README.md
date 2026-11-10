@@ -1,2 +1,65 @@
-# qiskit-swapnet
-One QAOA cost layer, laid out and routed onto a real device within a budget of k parallel SWAP layers
+> [!NOTE]
+> This repository is under active development and the code here should not be considered stable.
+
+# Qiskit swapnet
+
+Qiskit swapnet is a package for laying out and routing a single QAOA cost layer onto a real device within a budget of `k` parallel SWAP layers. It enables the creation of practical-depth QAOA layers by solving an approximated problem rather than the full original one. Specifically, it contains:
+
+1. Problem definitions from a covariance matrix, a QUBO, or a general coupling matrix, together with the coupling weights that the layout and routing stages expect.
+2. Analytic rank-0 and rank-1 shifts, which implement the dominant part of the couplings in a single layer of RZ rotations, with no two-qubit gates and no routing.
+3. Qubit layout by quadratic assignment, and SWAP routing by prize-collecting vertex-disjoint multi-commodity flow.
+4. Hardware descriptions built from a backend, with per-link traversal costs derived from device error rates.
+5. Construction of the resulting cost-layer circuit from an algorithm-neutral `Schedule`, so swapnet can be replaced by another routing algorithm without changing anything downstream.
+
+----------------------------------------------------------------------------------------------------
+
+## Documentation
+
+All documentation will be available on IBM Quantum Platform soon.
+
+----------------------------------------------------------------------------------------------------
+
+## Installation
+
+`swapnet` includes a native C++ extension, so building it requires a C++ compiler and CMake. Install it from source:
+
+```bash
+git clone git@github.com:Qiskit/qiskit-swapnet.git
+cd qiskit-swapnet
+pip install -e '.[dev]'
+```
+
+The core is Qiskit-free. To install only the core, without Qiskit and the fake backends, use `pip install -e '.[highs,graphs]'`.
+
+For more installation information refer to these [installation instructions](docs/install.rst).
+
+----------------------------------------------------------------------------------------------------
+
+## Contributing
+
+The source code is available [on GitHub](https://github.com/Qiskit/qiskit-swapnet).
+
+The developer guide is located at [CONTRIBUTING.md](CONTRIBUTING.md)
+in the root of this project's repository.
+By participating, you are expected to uphold Qiskit's [code of conduct](https://github.com/Qiskit/qiskit/blob/main/CODE_OF_CONDUCT.md).
+
+----------------------------------------------------------------------------------------------------
+
+## Citing this package
+
+If you use this package in your research, use the [CITATION.bib](CITATION.bib) file in this project’s repository to cite the appropriate reference(s).
+
+----------------------------------------------------------------------------------------------------
+
+## License
+
+[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
+----------------------------------------------------------------------------------------------------
+
+## Deprecation Policy
+
+We follow [semantic versioning](https://semver.org/). We may occasionally make breaking changes in
+order to improve the user experience. When possible, we will keep old interfaces and mark them as
+deprecated, as long as they can co-exist with the new ones. Each substantial improvement, breaking
+change, or deprecation will be documented in the [release notes](docs/release-notes.rst).
