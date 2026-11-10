@@ -1,0 +1,111 @@
+[build-system]
+requires = ["scikit-build-core>=0.9", "pybind11>=2.12"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "swapnet"
+version = "0.1.0"
+description = "Qubit layout by quadratic assignment and SWAP routing by disjoint-path multi-commodity flow"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Francisco Barahona" }]
+dependencies = [
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+# Default MILP backend. HiGHS is also reachable through scipy.optimize.milp.
+highs = ["highspy>=1.7"]
+scipy = ["scipy>=1.11"]
+graphs = ["networkx>=3.0", "rustworkx>=0.14"]
+# Stage 2 reads a backend Target and stage 5 builds the circuit. The core stays
+# qiskit-free: both import it lazily, inside the functions that need it.
+# rustworkx is a hard dependency of qiskit, and ansatz.build uses its edge-colouring
+# routines directly; named here so that is a stated requirement, not a happy accident.
+qiskit = ["qiskit>=2,<3", "networkx>=3.0", "rustworkx>=0.15"]
+# FakeBoston and friends, for the README's self-contained examples and the slow tests.
+devices = ["qiskit-ibm-runtime>=0.30"]
+dev = [
+    "pytest>=8.0",
+    "networkx>=3.0",
+    "rustworkx>=0.14",
+    "scipy>=1.11",
+    "highspy>=1.7",
+    "qiskit>=2,<3",
+    "qiskit-ibm-runtime>=0.30",
+    "ruff>=0.16",
+    "black>=25.0",
+    "pylint>=3.3",
+    "pymarkdownlnt>=0.9",
+]
+docs = [
+    "qiskit-sphinx-theme~=2.1.1",
+    # nbsphinx renders notebook cells with the ``ipython3`` Pygments lexer, which IPython provides.
+    "ipython",
+    "sphinx-copybutton",
+    "nbsphinx>=0.9.4",
+    "reno>=4.1",
+]
+
+[tool.scikit-build]
+wheel.packages = ["src/swapnet"]
+minimum-version = "0.9"
+build-dir = "build/{wheel_tag}"
+
+[tool.scikit-build.cmake]
+version = ">=3.20"
+
+[tool.black]
+line-length = 90
+# requires-python is >=3.10; without this black infers the running interpreter's
+# version and its AST safety check then refuses to run on an older one.
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 90
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "UP", "B", "C4", "SIM", "RUF", "TRY", "BLE", "S"]
+ignore = [
+    # __all__ in every module is grouped by pipeline stage with section comments, which is
+    # the point: it documents the sequence. Alphabetising would destroy that.
+    "RUF022",
+    # dict(a=1, b=2) for a bundle that only ever gets splatted into a call mirrors the
+    # signature it is splatted into, and reads better there than a brace literal.
+    "C408",
+    # The error text *is* the documentation in this package -- messages name the offending
+    # value and say what to do instead, which is why they are long and inline.
+    "TRY003", "EM101", "EM102",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests assert; that is their job. They also import fixtures from conftest by name, which
+# only works because pytest puts tests/ on the path.
+# S301: a pickle round-trip IS the test. S311: `random` seeds a fixture, not a key.
+"tests/*" = ["S101", "E402", "S301", "S311"]
+# assert is used in the library too, but only to check an internal invariant that a future
+# edit could break silently -- never to validate a caller's input, which raises instead.
+"src/swapnet/shifts.py" = ["S101"]
+
+[tool.ruff.lint.flake8-copyright]
+notice-rgx = """
+# This code is a Qiskit project.
+#
+# \\(C\\) Copyright IBM 2026\\.
+#
+# This code is licensed under the Apache License, Version 2\\.0\\. You may
+# obtain a copy of this license in the LICENSE\\.txt file in the root directory
+# of this source tree or at http\\:\\/\\/www\\.apache\\.org\\/licenses\\/LICENSE\\-2\\.0\\.
+#
+# Any modifications or derivative works of this code must retain this
+# copyright notice, and modified files need to carry a notice indicating
+# that they have been altered from the originals\\.
+"""
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["error::DeprecationWarning"]
+# conftest.py exposes helpers the test modules import by name.
+pythonpath = ["tests"]
+markers = ["slow: needs a full-size device target; deselect with -m 'not slow'"]
