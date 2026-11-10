@@ -1,0 +1,21 @@
+{
+  "_why_md013_is_off": [
+    "MD013 (line-length) is disabled because a GitHub-flavored markdown table row must be",
+    "one physical line -- it cannot be wrapped at all. The tuning-knob table in README.md",
+    "has rows up to ~700 characters, and pymarkdown's MD013 has no table exemption (unlike",
+    "markdownlint's `tables: false`), so the rule can only be all-or-nothing here.",
+    "Prose width is enforced separately: every non-table line in README.md is <= 90",
+    "columns, which is the same limit ruff and black apply to the Python."
+  ],
+  "plugins": {
+    "md013": {
+      "enabled": false
+    },
+    "md041": {
+      "enabled": false
+    },
+    "md046": {
+      "style": "fenced"
+    }
+  }
+}
