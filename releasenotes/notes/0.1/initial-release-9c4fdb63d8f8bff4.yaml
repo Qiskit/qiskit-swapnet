@@ -1,0 +1,3 @@
+---
+prelude: >
+    This is the first release of qiskit-swapnet, a package for laying out and routing a single QAOA cost layer onto a real device within a budget of k parallel SWAP layers.
