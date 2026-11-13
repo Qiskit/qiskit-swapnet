@@ -16,12 +16,33 @@ Activate your new environment.
 
     source /path/to/virtual/environment/bin/activate
 
-``swapnet`` includes a native C++ extension, so building it requires a C++ compiler and ``CMake``.
+``qiskit-swapnet`` includes a native C++ extension, so building it requires a C++ compiler and ``CMake``.
 
-Install from source
-^^^^^^^^^^^^^^^^^^^
 
-First, clone the ``swapnet`` repository.
+There are two primary ways to install the packages:
+
+- :ref:`Option 1`
+- :ref:`Option 2`
+
+.. _Option 1:
+
+Option 1: Install from PyPI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The most straightforward way to install the ``qiskit-swapnet`` package is via ``PyPI``.
+
+.. code:: sh
+
+    pip install 'qiskit-swapnet'
+
+
+.. _Option 2:
+
+Option 2: Install from source
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you plan to develop in the repository or run the notebooks locally, you should install from source.
+First, clone the ``qiskit-swapnet`` repository.
 
 .. code:: sh
 
@@ -34,7 +55,7 @@ Next, upgrade pip and enter the repository.
     pip install --upgrade pip
     cd qiskit-swapnet
 
-The next step is to install ``swapnet`` to the virtual environment. If you plan on developing in the repository,
+The next step is to install ``qiskit-swapnet`` to the virtual environment. If you plan on developing in the repository,
 install the ``dev`` dependencies, which also include Qiskit and the fake backends.
 
 Adjust the options below to suit your needs.

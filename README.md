@@ -35,7 +35,13 @@ All documentation will be available on IBM Quantum Platform soon.
 
 ## Installation
 
-`swapnet` includes a native C++ extension, so building it requires a C++ compiler and CMake. Install it from source:
+`swapnet` includes a native C++ extension, so building it requires a C++ compiler and CMake. The package can be either intalled via `pip`:
+
+```bash
+pip install 'qiskit-swapnet'
+```
+
+Or installed from source:
 
 ```bash
 git clone git@github.com:Qiskit/qiskit-swapnet.git
