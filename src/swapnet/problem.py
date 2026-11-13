@@ -22,7 +22,7 @@ Nothing here knows about devices, circuits or covariance matrices. The construct
 :meth:`Problem.verify` checks the map numerically for the two that do a substitution.
 
 THE COUPLING-POWER ASYMMETRY, WHICH IS THE WHOLE REASON THIS CLASS EXISTS
-------------------------------------------------------------------------
+-------------------------------------------------------------------------
 
 The objective under a depth budget is to maximise ``sum J^2`` over the interactions the
 circuit realises. The two swapnet stages both accept a ``couplings`` argument, and they
@@ -33,19 +33,19 @@ consume it at **different powers**:
 * the router's per-commodity reward and its ``realized_weight`` accumulate
   ``couplings**2`` -- *quadratic* (``src/cpp/pipeline.cpp:42-45``).
 
-So the same ``sum J^2`` objective needs ``J**2`` handed to the mapper and ``|J|`` handed
-to the router. Pass ``J**2`` to the router and it silently optimises ``sum J^4`` and
-reports coverage of *that*; the plan still validates, the numbers still look healthy, and
-the objective is not the one being scored. That is not hypothetical -- it was a live bug
-in a demo notebook.
+So the same ``sum J^2`` objective needs ``J**2`` handed to the mapper and ``\\|J\\|``
+handed to the router. Pass ``J**2`` to the router and it silently optimises
+``sum J^4`` and reports coverage of *that*; the plan still validates, the numbers still
+look healthy, and the objective is not the one being scored. That is not hypothetical --
+it was a live bug in a demo notebook.
 
 :meth:`mapper_couplings` and :meth:`router_couplings` are therefore the only supported way
 to feed the two stages. A caller that uses them cannot get the power wrong, and
 ``plan.realized_fraction`` then equals :meth:`covered_fraction` exactly, which
 ``swapnet.plan_schedule`` asserts.
 
-THE TILT, AND WHY THE ROUTER DOES NOT GET RAW |J|
--------------------------------------------------
+THE TILT, AND WHY THE ROUTER DOES NOT GET RAW \\|J\\|
+---------------------------------------------------
 
 ``route`` normalises whatever it is given to mean 1, then prices each candidate path
 against the reward. On a dense problem the raw ``J^2`` can span five orders of magnitude,
@@ -56,7 +56,7 @@ Measured on the F2 100-asset objective matrix: 26% of pairs fall below one arc-c
 :meth:`router_couplings` therefore returns ``sqrt(1 + tilt * J^2 / max(J^2))``, so the
 reward (its square) is ``1 + tilt * J^2 / max(J^2)``: every pair can pay its way, while
 the heaviest keep up to ``1 + tilt`` times the priority. Ordering is preserved. Pass
-``tilt=None`` for the untilted ``|J|``, which is the honest choice when you want
+``tilt=None`` for the untilted ``\\|J\\|``, which is the honest choice when you want
 ``realized_weight`` to *be* the ``sum J^2`` coverage rather than a monotone proxy for it.
 """
 
@@ -167,7 +167,7 @@ class Problem:
     ) -> dict[tuple[int, int], float]:
         """For :func:`swapnet.route`, whose reward is quadratic. See the module docstring.
 
-        ``tilt=None`` gives ``|J|``, so the router's ``realized_weight`` *is* the
+        ``tilt=None`` gives ``\\|J\\|``, so the router's ``realized_weight`` *is* the
         ``sum J^2`` coverage. A positive ``tilt`` gives
         ``sqrt(1 + tilt * J^2 / max(J^2))``, which routes the light pairs at the cost of
         making ``realized_weight`` a monotone proxy rather than the objective itself.
