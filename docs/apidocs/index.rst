@@ -12,3 +12,17 @@
 
 .. toctree::
    :maxdepth: 1
+
+   swapnet.problem
+   swapnet.shifts
+   swapnet.hardware
+   swapnet.api
+   swapnet.plan
+   swapnet.schedule
+   swapnet.ansatz
+   swapnet.conventions
+   swapnet.results
+   swapnet.milp
+   swapnet.graphs
+   swapnet.weights
+   swapnet.verify

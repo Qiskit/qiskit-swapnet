@@ -16,10 +16,6 @@ import re
 import sys
 from importlib.metadata import version as metadata_version
 
-# The following line is required for autodoc to be able to find and import the code whose API should
-# be documented.
-sys.path.insert(0, os.path.abspath("../src"))
-
 project = "swapnet"
 project_copyright = "2026, Qiskit addons team"
 description = "Qubit layout and SWAP routing for a QAOA cost layer."
