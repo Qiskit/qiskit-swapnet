@@ -82,7 +82,7 @@ jobs:
       - github
     environment:
       name: pypi
-      url: https://pypi.org/p/swapnet
+      url: https://pypi.org/p/qiskit-swapnet
     permissions:
       id-token: write
     steps:

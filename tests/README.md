@@ -30,7 +30,7 @@ The following commands check the code against the project's coding standards, as
 
 ```sh
 ruff check src tests        # lint, including the copyright header on every source file
-black --check src tests     # formatting, line length 90, target py310
+black --check src tests     # formatting, line length 90, target py311
 pymarkdown scan README.md   # markdown lint, config in .pymarkdown.json
 ```
 

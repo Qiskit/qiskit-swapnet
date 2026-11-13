@@ -18,7 +18,7 @@ free. Two such parts are available, and both reduce to **one layer of RZ rotatio
 global phase** -- no two-qubit gates, no routing, no depth budget:
 
     rank 0   J_ij ~ c                sum_{i<j} z_i z_j        = ((sum_i z_i)^2 - n) / 2
-    rank 1   J_ij ~ b_i b_j          sum_{i<j} b_i b_j z_iz_j = ((b . z)^2 - |b|^2) / 2
+    rank 1   J_ij ~ b_i b_j         sum_{i<j} b_i b_j z_iz_j = ((b . z)^2 - \\|b\\|^2) / 2
 
 Both right-hand sides are functions of a single weighted sum of ``z``, which is why they
 cost one rotation layer rather than a network. An LCU or phase-oracle module consumes the
@@ -123,7 +123,7 @@ class Shift:
         ``fields`` and ``offset`` are carried through untouched: the shift moves two-body
         weight into a separately-implemented term, it does not change the one-body part or
         the constant. Whoever implements the shifted term is responsible for its own
-        constant (``-n/2`` or ``-|b|^2/2`` from the identities above).
+        constant (``-n/2`` or ``-\\|b\\|^2/2`` from the identities above).
         """
         shifted = self.shifted_couplings()
         return problem.with_couplings(

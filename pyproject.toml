@@ -7,7 +7,7 @@ name = "swapnet"
 version = "0.1.0"
 description = "Qubit layout by quadratic assignment and SWAP routing by disjoint-path multi-commodity flow"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [{ name = "Francisco Barahona" }]
 dependencies = [
     # 1.26.2 is what qiskit-ibm-runtime (dev/devices extras) requires; the minimum-version
@@ -62,13 +62,13 @@ version = ">=3.20"
 
 [tool.black]
 line-length = 90
-# requires-python is >=3.10; without this black infers the running interpreter's
+# requires-python is >=3.11; without this black infers the running interpreter's
 # version and its AST safety check then refuses to run on an older one.
-target-version = ["py310"]
+target-version = ["py311"]
 
 [tool.ruff]
 line-length = 90
-target-version = "py310"
+target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "UP", "B", "C4", "SIM", "RUF", "TRY", "BLE", "S"]
@@ -121,7 +121,7 @@ markers = ["slow: needs a full-size device target; deselect with -m 'not slow'"]
 manylinux-x86_64-image = "manylinux_2_28"
 manylinux-aarch64-image = "manylinux_2_28"
 # pybind11 does not target the stable ABI, so there is one wheel per CPython version.
-build = ["cp310-*", "cp311-*", "cp312-*", "cp313-*"]
+build = ["cp311-*", "cp312-*", "cp313-*"]
 skip = ["*-win32", "*_i686", "*_universal2", "*-musllinux_*"]
 test-extras = ["dev"]
 # The slow tests build a full-size device target; the quick ones are enough to prove the
