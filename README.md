@@ -1,13 +1,13 @@
 <!-- SHIELDS -->
 <div align="left">
 
-  [![Release](https://img.shields.io/pypi/v/swapnet.svg?label=Release)](https://github.com/Qiskit/qiskit-swapnet/releases)
+  [![Release](https://img.shields.io/pypi/v/qiskit-swapnet.svg?label=Release)](https://github.com/Qiskit/qiskit-swapnet/releases)
   ![Platform](https://img.shields.io/badge/%F0%9F%92%BB%20Platform-Linux%20%7C%20macOS%20%7C%20Windows-informational)
-  [![Python](https://img.shields.io/pypi/pyversions/swapnet?label=Python&logo=python)](https://www.python.org/)
+  [![Python](https://img.shields.io/pypi/pyversions/qiskit-swapnet?label=Python&logo=python)](https://www.python.org/)
   [![Qiskit](https://img.shields.io/badge/Qiskit%20-%20%3E%3D2.0%20-%20%236133BD?logo=Qiskit)](https://github.com/Qiskit/qiskit)
 <br />
   [![License](https://img.shields.io/github/license/Qiskit/qiskit-swapnet?label=License)](LICENSE.txt)
-  [![Downloads](https://img.shields.io/pypi/dm/swapnet.svg?label=Downloads)](https://pypi.org/project/swapnet/)
+  [![Downloads](https://img.shields.io/pypi/dm/qiskit-swapnet.svg?label=Downloads)](https://pypi.org/project/qiskit-swapnet/)
   [![Tests](https://github.com/Qiskit/qiskit-swapnet/actions/workflows/test_latest_versions.yml/badge.svg)](https://github.com/Qiskit/qiskit-swapnet/actions/workflows/test_latest_versions.yml)
   [![Coverage](https://coveralls.io/repos/github/Qiskit/qiskit-swapnet/badge.svg?branch=main)](https://coveralls.io/github/Qiskit/qiskit-swapnet?branch=main)
 </div>
