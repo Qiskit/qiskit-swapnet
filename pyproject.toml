@@ -3,7 +3,7 @@ requires = ["scikit-build-core>=0.9", "pybind11>=2.12"]
 build-backend = "scikit_build_core.build"
 
 [project]
-name = "swapnet"
+name = "qiskit-swapnet"
 version = "0.1.0"
 description = "Qubit layout by quadratic assignment and SWAP routing by disjoint-path multi-commodity flow"
 readme = "README.md"

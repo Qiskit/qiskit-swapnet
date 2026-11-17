@@ -21,7 +21,7 @@ project_copyright = "2026, Qiskit addons team"
 description = "Qubit layout and SWAP routing for a QAOA cost layer."
 author = "Qiskit addons team"
 language = "en"
-release = metadata_version("swapnet")
+release = metadata_version("qiskit-swapnet")
 
 html_theme = "qiskit-ecosystem"
 html_theme_options = {
