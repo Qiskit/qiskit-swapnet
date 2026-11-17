@@ -80,9 +80,6 @@ jobs:
       - build_sdist
       - build_wheels
       - github
-    environment:
-      name: pypi
-      url: https://pypi.org/p/qiskit-swapnet
     permissions:
       id-token: write
     steps:
